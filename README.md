@@ -2,7 +2,7 @@
 
 ## 🌟 **Project Overview** 🌟
 
-- This GitHub repository contains the code for a website designed to assist homebuyers and renters in [City Name] to discover a property's crime and hazard profiles.
+- This GitHub repository contains the code for a website designed to assist homebuyers and renters to discover a property's crime and hazard profiles.
 - Users can access Crime Safety and Hazard Safety percentile scores for a given address, allowing them to compare it to other properties in the city.
 - The platform offers both a quick overview and in-depth statistics on property safety to inform users' decisions.
 
