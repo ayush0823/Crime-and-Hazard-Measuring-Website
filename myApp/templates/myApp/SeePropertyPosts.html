@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{post.title}}</title>
+  <link rel="stylesheet" href="./myApp/seepost.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
+  
+  </head>
+  <body>
+    {% if user != None%}
+    <nav id="navbar">
+        <div id="logo">
+            <a href="/myApp/"><img src="{%static 'myApp/logo.png'%}" alt=""></a>
+        </div>
+        <ul>
+            <li class="padtop">
+                <div id="home">
+                    <a href="/myApp/">
+                        <span class="fas fa-home"></span>
+                        Home
+                    </a>
+                </div>
+            </li>
+            <li class="padtop"><a href="/myApp/postIncident/">Post Incident</a></li>
+            <li class="padtop"><a href="/myApp/postProperty/">Post Property</a></li>
+            <li class="padtop"><a href="/myApp/IncidentFeed">Incident Feed</a></li>
+            <li class="padtop"><a href="/myApp/PropertyFeed">Property Feed</a></li>
+            <li class="padtop"><a href="/myApp/logout">Sign Out</a></li>
+            <li class="padtop">
+                <div id="profile">
+                    <a href="/myApp/profile/">
+                        <span class="far fa-user"></span>
+                        Profile
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    {% else %}
+    <nav id="navbar">
+        <div id="logo">
+            <a href="#"><img src="{%static 'myApp/logo.png'%}" alt=""></a>
+        </div>
+        <ul>
+            <li class="padtop">
+                <div id="home">
+                    <a href="/myApp/">
+                        <span class="fas fa-home"></span>
+                        Home
+                    </a>
+                </div>
+            </li>
+            <li class="padtop"><a href="/myApp/IncidentFeed">Incident Feed</a></li>
+            <li class="padtop"><a href="/myApp/PropertyFeed">Property Feed</a></li>
+            <li class="padtop"><a href="/myApp/login">Sign In/Register</a></li>
+        </ul>
+    </nav>
+    {%endif%}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+            <div class="card border-0 shadow">
+                <img src="https://www.bootdey.com/img/Content/avatar/avatar6.png" alt="...">
+                <div class="card-body p-1-9 p-xl-5">
+                    <div class="mb-4">
+                        {%if author.UserName != None%}
+                            <h3 class="h4 mb-0">{{author.UserName}}</h3>
+                            <span class="text-primary">{{author.FirstName}} {{author.LastName}}</span>
+                        {%else%}
+                            <h3 class="h4 mb-0">Can't find this UserName</h3>
+                        {%endif%}
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        {%if author.UserName != None%}
+                        <li class="mb-3"><a href="mailto:{{author.Email}}"><i class="far fa-envelope display-25 me-3 text-secondary"></i>{{author.Email}}</a></li>
+                        <li class="mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock display-25 me-3 text-secondary" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                            </svg>{{post.time}}</li>
+                        {%endif%}
+                    </ul>
+                    <!-- <ul class="social-icon-style2 ps-0">
+                        <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="ps-lg-1-6 ps-xl-5">
+                <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="h1 mb-0 text-primary">{{post.title}}</h2>
+                    </div>
+                    <p>{{post.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+</body>
+</html>

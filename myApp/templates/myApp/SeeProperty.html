@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myApp/profile.css' %}">
+    {%load static %}
+    <link rel=icon href="{% static 'myApp/profile_icon.png' %}">
+    <!-- <link rel=icon href="./static/myApp/profile_icon.png"> -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css' rel='stylesheet' />
+    <title>{{post.title}}</title>
+</head>
+
+<body>
+    {% if myuser != None%}
+    <nav id="navbar">
+        <div id="logo">
+            <a href="/myApp/"><img src="{%static 'myApp/logo.png'%}" alt=""></a>
+        </div>
+        <ul>
+            <li class="padtop">
+                <div id="home">
+                    <a href="/myApp/">
+                        <span class="fas fa-home"></span>
+                        Home
+                    </a>
+                </div>
+            </li>
+            <li class="padtop"><a href="/myApp/postIncident/">Post Incident</a></li>
+            <li class="padtop"><a href="/myApp/postProperty/">Post Property</a></li>
+            <li class="padtop"><a href="/myApp/IncidentFeed">Incident Feed</a></li>
+            <li class="padtop"><a href="/myApp/PropertyFeed">Property Feed</a></li>
+            <li class="padtop"><a href="/myApp/logout">Sign Out</a></li>
+            <li class="padtop">
+                <div id="profile">
+                    <a href="/myApp/profile/">
+                        <span class="far fa-user"></span>
+                        Profile
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+        <a class="nav-link dropdown-toggle" href="#" id="toggle-menu-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+          </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="toggle-menu-btn">
+        <a class="dropdown-item" href="/myApp/postIncident/">Post Incident</a>
+        <a class="dropdown-item" href="/myApp/postProperty/">Post Property</a></a>
+        <a class="dropdown-item" href="/myApp/IncidentFeed">Incident Feed</a>
+        <a class="dropdown-item" href="/myApp/PropertyFeed">Property Feed</a>
+        <a class="dropdown-item" href="/myApp/profile/">  <span class="far fa-user"></span> Profile</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/myApp/logout">Sign Out</a>
+      </div>
+
+
+    </nav>
+    {% else %}
+    <nav id="navbar">
+        <div id="logo">
+            <a href="#"><img src="{%static 'myApp/logo.png'%}" alt=""></a>
+        </div>
+        <ul>
+            <li class="padtop">
+                <div id="home">
+                    <a href="/myApp/">
+                        <span class="fas fa-home"></span>
+                        Home
+                    </a>
+                </div>
+            </li>
+            <li class="padtop"><a href="/myApp/IncidentFeed">Incident Feed</a></li>
+            <li class="padtop"><a href="/myApp/PropertyFeed">Property Feed</a></li>
+            <li class="padtop"><a href="/myApp/login">Sign In/Register</a></li>
+        </ul>
+
+        <a class="nav-link dropdown-toggle" href="#" id="toggle-menu-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Menu
+          </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="toggle-menu-btn">
+        <a class="dropdown-item" href="/myApp/IncidentFeed">Incident Feed</a>
+        <a class="dropdown-item" href="/myApp/PropertyFeed">Property Feed</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/myApp/login">Sign In/Register</a>
+      </div>
+
+    </nav>
+    {%endif%}
+
+    <div class="container">
+        <div class="main-body">
+            <div class="row">
+                <div class="row gutters-sm">
+                    <div class="col-md-4 mb-3">
+                        <div class="card" style="border-radius: 1rem; height: 100%; width: 100%; text-align: center;">
+                            <div class="card-body" style="margin-top: 2rem;">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <div style="margin-bottom: 1rem;">
+                                        <h1 style="font-size: 3rem;"><strong>Location</strong></h1>
+                                    </div>
+                                    <div  width="250" id='map'>
+                                    </div>
+                                    <div class="mt-3">
+                                        <!-- <h3>{{user.FirstName}} {{user.LastName}}</h3> -->
+                                        <div class="card mt-3">
+                                            <ul class="list-group list-group-flush">
+                                                <!-- <li
+                                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-twitter mr-2 icon-inline text-info">
+                                                            <path
+                                                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                                            </path>
+                                                        </svg>Twitter</h6>
+                                                    <span class="text-secondary">{{user.Twitter}}</span>
+                                                </li> -->
+                                                <!-- <li
+                                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-instagram mr-2 icon-inline text-danger">
+                                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5">
+                                                            </rect>
+                                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z">
+                                                            </path>
+                                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                                        </svg>Instagram</h6>
+                                                    <span class="text-secondary">{{user.Instagram}}</span>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-8">
+                        <div class="card mb-3" style="border-radius: 1rem;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Title</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.title}}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Description</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.description}}
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Author</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <a href="/myApp/seeprofile/{{post.author}}">{{post.author}}</a>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Address Line 1</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.address_line1}}
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Address Line 2</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.address_line2}}
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">City</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.city}}
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">State</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.state}}
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Country</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.country}}
+                                    </div>
+                                </div>
+                                <hr>
+
+                                
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Pincode</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{post.pincode}}
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        console.log("here")
+        console.log({{post.longitude}});
+        mapboxgl.accessToken = 'pk.eyJ1IjoidmVuaWwxMCIsImEiOiJjbGd0M3p3MHQxMDVyM3JvMm55Z3hjcjZiIn0.J76tfDJhVMVCDzXqNCpBIA';
+        var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/venil10/clgt4gkwl002x01png8jhhn1f',
+          center: [{{post.longitude}},{{post.latitude}}],
+          zoom: 12
+        });
+        var marker = new mapboxgl.Marker()
+          .setLngLat([{{post.longitude}},{{post.latitude}}])
+          .addTo(map);
+    </script>
+
+</body>
+
+</html>
